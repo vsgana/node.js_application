@@ -19,7 +19,7 @@ jobs:
           name: Build and Push to DockerHub
           command: |
             docker build -t vsgana/node-app:latest .
-            echo "$DOCKER_PASS" | docker login -u vsgana --password-stdin
+            echo "$DOCKER_PASS" | docker login -u vagusatwik7@gmail.com --password-stdin
             docker push vsgana/node-app:latest
 
 workflows:
