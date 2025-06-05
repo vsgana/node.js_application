@@ -1,11 +1,14 @@
 version: 2.1
 jobs:
-  buildd:
+  build:
     docker:
-    - images: circleci/node:18
-  steps:
+      - image: circleci/node:18
+    steps:
       - checkout
-      - run: npm install --save
+      - run:
+          name: Install Dependencies
+          command: npm install --save
+
   docker-build:
     docker:
       - image: circleci/node:18
@@ -15,12 +18,14 @@ jobs:
       - run:
           name: Build and Push to DockerHub
           command: |
-            docker build -t project/node-app:latest .
-            echo "$DOCKER_PASS" | docker login -u vagusatwik7@gmail.com --password-stdin
-            docker push project/node-app:latest
-  
+            docker build -t vsgana/node-app:latest .
+            echo "$DOCKER_PASS" | docker login -u vsgana --password-stdin
+            docker push vsgana/node-app:latest
+
 workflows:
   build_and_dockerize:
     jobs:
       - build
-      - docker-build
+      - docker-build:
+          requires:
+            - build
